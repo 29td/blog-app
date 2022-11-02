@@ -1,24 +1,43 @@
-# README
+# Blog App
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This is a basic Blog website that allows users to create, edit, comment and delete posts, keeping data in a database. This project implements both authorization and authentication in order to provide extended functionality to logged in and authorized users.
 
-Things you may want to cover:
 
-* Ruby version
+## Built With
 
-* System dependencies
+- Ruby On Rails
+- SQL/MySQL
 
-* Configuration
+## Getting Started
 
-* Database creation
+- Clone repository [link](https://github.com/29td/blog-app.git).
+- Change directory into project
+- Use the following commands to
+    - install necessary gems bundle install
+    - install necessary javascript packages npm install
+    - run the development server rails server
 
-* Database initialization
 
-* How to run the test suite
 
-* Services (job queues, cache servers, search engines, etc.)
+## Author
 
-* Deployment instructions
+👤 **Nonhlanhla R Mndebele**
 
-* ...
+- GitHub: [@Nonhlanhla](https://github.com/29td)
+- Twitter: [@NonhlanhlaMnde6](https://twitter.com/NonhlanhlaMnde6)
+- LinkedIn: [LinkedIn](https://linkedin.com/in/nonhlanhla-mndebele-ab7448226)
+## 🤝 Contributing
+
+Contributions, issues, and feature requests are welcome!
+
+Feel free to check the [issues page](https://github.com/29td/blog-app/issues).
+
+## Show your support
+
+Give a ⭐️ if you like this project!
+
+## Acknowledgments
+
+- Hat tip to anyone whose code was used
+- Inspiration
+- etc
