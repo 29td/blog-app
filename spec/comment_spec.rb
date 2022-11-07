@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Comments, type: :model do
+RSpec.describe Comment, type: :model do
   before(:all) do
     @user = User.create(name: 'Tom', photo: 'https://unsplash.com/photos/F_-0BxGuVvo', bio: 'Teacher from Mexico.',
                         posts_counter: 0)
@@ -10,12 +10,12 @@ RSpec.describe Comments, type: :model do
 
   context 'Associations' do
     it 'belongs to an author' do
-      comment = Comments.reflect_on_association('author')
+      comment = Comment.reflect_on_association('author')
       expect(comment.macro).to eq(:belongs_to)
     end
 
     it 'belongs to a post' do
-      comment = Comments.reflect_on_association('post')
+      comment = Comment.reflect_on_association('post')
       expect(comment.macro).to eq(:belongs_to)
     end
   end

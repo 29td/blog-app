@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Likes, type: :model do
+RSpec.describe Like, type: :model do
   before(:all) do
     @user = User.create(name: 'Tom', photo: 'https://unsplash.com/photos/F_-0BxGuVvo', bio: 'Teacher from Mexico.',
                         posts_counter: 0)
@@ -10,12 +10,12 @@ RSpec.describe Likes, type: :model do
 
   context 'Associations' do
     it 'belongs to an author' do
-      like = Likes.reflect_on_association('author')
+      like = Like.reflect_on_association('author')
       expect(like.macro).to eq(:belongs_to)
     end
 
     it 'belongs to a post' do
-      like = Likes.reflect_on_association('post')
+      like = Like.reflect_on_association('post')
       expect(like.macro).to eq(:belongs_to)
     end
   end
