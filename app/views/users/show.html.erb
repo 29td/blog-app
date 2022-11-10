@@ -28,6 +28,8 @@
     </div>
   </div>
 
+  <% end %>
+  <%= link_to "Add New Post", "/users/#{@user.id}/posts/new", {:class => "see_all_post"}%>
   <button>
     <%= link_to "See All Posts", user_posts_path(@user) %>
   </button>
