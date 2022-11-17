@@ -1,6 +1,6 @@
 <section class="users-show">
     <div>
-        <%= image_tag('icon.jpg', class: "userPix")  %>
+        <%= image_tag('icon.png', class: "userPix")  %>
         <h1><%= @user.name %></h1>
         <p>Number of posts:<%= @user.posts_counter || 0 %></p>
         <p><%= @user.bio %></p>
@@ -9,24 +9,16 @@
  
 </section>
    <div>
-      <% @user.recent_posts.each do |post| %>
-        <%= link_to user_post_path(@user, id: post.id) do %>
-        <p>Post #<%=post.id %></p>
-        <p><%=post.text %></p>
-        <p>
-          <span>
-          Comments: <%= post.comments_counter || 0 %>,
-          Likes: <%= post.likes_counter || 0 %>
-        </span>
-        </p>
-        <% end %>
-      <% end %>
+    <% @user.posts.each do |e| %>
+        <div class="posts">
+            <h1>Post: <%= e.title %></h1>
+            <p><%= e.text %></p>
+            <div>
+            <span>Comments:<%= e.comments_counter || 0%></span>
+            <span>Likes:<%= e.likes_counter || 0%></span>
+            </div>
+          </div>
+    <% end %>
+    <%= link_to "Add New Post", "/users/#{@user.id}/posts/new", {:class => "see_all_post"}%>
+<button><%=link_to "See all posts", user_posts_path(@user) %></button>
     </div>
-  </div>
-
-  <% end %>
-  <%= link_to "Add New Post", "/users/#{@user.id}/posts/new", {:class => "see_all_post"}%>
-  <button>
-    <%= link_to "See All Posts", user_posts_path(@user) %>
-  </button>
-</div>
