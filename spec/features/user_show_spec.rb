@@ -1,38 +1,41 @@
 require 'rails_helper'
+require 'spec_helper'
 
-RSpec.describe 'UserShows', type: :feature do
-  describe 'Get user show action' do
-    before(:each) do
-      @first_user = User.create(name: 'Jimmy', photo: 'https://unsplash.com/photos/mgAioVzKcjQ',
-                                bio: 'I am Jimmy.')
+RSpec.describe 'Users Show', type: :request do
+  subject { page }
 
-      @first_post = Post.create(author_id: @first_user, text: 'text', title: 'title')
-      @first_post.save
-    end
-
-    scenario 'shows user content on screen' do
-      visit users_path
-      expect(page).to have_content('List of All Users')
-    end
-
-    feature 'user show page' do
-      background { visit user_path(User.first.id) }
-      scenario "I can see the user's profile" do
-        expect(page.first('img')['src']).to have_content('https://unsplash.com/photos/mgAioVzKcjQ')
-      end
-
-      scenario "I can see the user's username" do
-        expect(page).to have_content('Jimmy')
-      end
-
-      scenario "I can see the user's bio" do
-        expect(page).to have_content('I am Jimmy.')
-      end
-
-      scenario "I can see a button that lets me view all of a user's posts" do
-        click_link('See All Posts')
-        expect(current_path).to eq user_posts_path(User.first.id)
-      end
-    end
+  before(:each) do
+    User.create(name: 'John Doe', posts_counter: 5, id: 352,
+                photo: '/assets/icon-c651a4f23e11b63bbbeb45a4ddb3d3a52ec3cc1f40969a503c8f86f0b3ee1962.jpg',
+                bio: 'I am John Doe')
+    Post.create(title: 'title1', text: 'text1', comments_counter: 0, likes_counter: 0, author_id: 352, id: 1)
+    Post.create(title: 'title2', text: 'text2', comments_counter: 0, likes_counter: 0, author_id: 352, id: 2)
+    Post.create(title: 'title3', text: 'text3', comments_counter: 0, likes_counter: 0, author_id: 352, id: 3)
+    Post.create(title: 'title4', text: 'text4', comments_counter: 0, likes_counter: 0, author_id: 352, id: 4)
+    Post.create(title: 'title5', text: 'text5', comments_counter: 0, likes_counter: 0, author_id: 352, id: 5)
+  end
+  it 'renders the name of the user' do
+    get user_path(352)
+    expect(response.body).to include('John Doe')
+  end
+  it 'renders the bio of the user' do
+    get user_path(352)
+    expect(response.body).to include('I am John Doe')
+  end
+  it 'renders the number of posts of the user' do
+    get user_path(352)
+    expect(response.body).to include('5')
+  end
+  it 'renders the profile picture of the user' do
+    get user_path(352)
+    expect(response.body).to include('img')
+  end
+  it "renders the first 3 of title of the user's posts" do
+    get user_path(352)
+    expect(response.body).to include('text1', 'text2', 'text3')
+  end
+  it 'there is button to see all posts' do
+    get user_path(352)
+    expect(response.body).to include('See all posts')
   end
 end

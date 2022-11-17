@@ -1,36 +1,38 @@
 require 'rails_helper'
+require 'spec_helper'
 
-RSpec.feature 'PostIndices', type: :feature do
-  describe 'For the Post model' do
-    before(:each) do
-      @user = User.create(name: 'Jimmy', bio: 'I am Jimmy', posts_counter: 0)
-      @post = Post.create(author: @user, title: 'title', text: 'text', likes_counter: 1,
-                          comments_counter: 1)
-    end
+RSpec.describe 'Post Show', type: :request do
+  subject { page }
 
-    before { @post.save }
-    it 'if there is max 250 characters' do
-      @post.title = 'title'
-      expect(@post).to be_valid
-    end
+  before(:each) do
+    User.create(name: 'John Doe', posts_counter: 5, id: 1, photo: 'https://i.imgur.com/1J3wZQx.jpg',
+                bio: 'I am John Doe')
+    Post.create(title: 'title1', text: 'text1', comments_counter: 0, likes_counter: 0, author_id: 1, id: 1)
+    Like.create(author_id: 1, post_id: 1)
+  end
 
-    it 'if likes counter is integer' do
-      @post.likes_counter = 1
-      expect(@post).to be_valid
-    end
-    it 'if likes counter greater than or equal to zero' do
-      @post.likes_counter = -2
-      expect(@post).to_not be_valid
-    end
+  it 'renders the title of the post' do
+    get user_posts_path(1)
+    expect(response.body).to include('text1')
+  end
 
-    it 'if comments counter greater than or equal to zero.' do
-      @post.comments_counter = -2
-      expect(@post).to_not be_valid
-    end
+  it 'renders the picture of the user' do
+    get user_posts_path(1)
+    expect(response.body).to include('img')
+  end
 
-    it 'if comments counter is integer' do
-      @post.comments_counter = 1
-      expect(@post).to be_valid
-    end
+  it 'renders the number of likes of the post' do
+    get user_posts_path(1)
+    expect(response.body).to include('0')
+  end
+
+  it 'renders the number of comments of the post' do
+    get user_posts_path(1)
+    expect(response.body).to include('0')
+  end
+
+  it 'renders the text of the post' do
+    get user_posts_path(1)
+    expect(response.body).to include('text1')
   end
 end

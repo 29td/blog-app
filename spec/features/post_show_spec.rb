@@ -1,42 +1,59 @@
 require 'rails_helper'
+require 'spec_helper'
 
-RSpec.describe 'PostShows', type: :feature do
+RSpec.describe 'Post Show', type: :request do
+  subject { page }
+
   before(:each) do
-    @user = User.create(name: 'Jimmy', photo: 'https://unsplash.com/photos/mgAioVzKcjQ',
-                        bio: 'I am Jimmy', posts_counter: 0)
-
-    @post = Post.create(title: 'title', text: 'text', author: @user, likes_counter: 0, comments_counter: 0)
-
-    @comment = Comment.create(text: 'text', author: @user, post: @post)
-    @like = Like.create(author_id: @user.id, post_id: @post.id)
-
-    visit "/users/#{@user.id}/posts/#{@post.id}"
-    # visit user_post_path(@user, @post)
+    User.create(name: 'John Doe', posts_counter: 5, id: 1, photo: 'https://i.imgur.com/1J3wZQx.jpg',
+                bio: 'I am John Doe')
+    Post.create(title: 'title', text: 'text1', comments_counter: 2, likes_counter: 3, author_id: 1, id: 1)
+    Comment.create(author_id: 1, post_id: 1, text: 'comment1')
+    Comment.create(author_id: 2, post_id: 1, text: 'comment2')
   end
 
-  describe 'Specs for view posts#show' do
-    it 'I can see who wrote the post' do
-      expect(page).to have_content 'Jimmy'
-    end
+  it 'renders the title of the post' do
+    get user_post_path(1, 1)
+    expect(response.body).to include('title')
+  end
 
-    it 'I can see how many comments it has' do
-      expect(page).to_not have_content 'Comments: '
-    end
+  it 'renders the like button' do
+    get user_posts_path(1)
+    expect(response.body).to include('Like')
+  end
 
-    it 'I can see how many likes it has' do
-      expect(page).to_not have_content 'Likes: '
-    end
+  it 'renders the post author' do
+    get user_posts_path(1)
+    expect(response.body).to include('John Doe')
+  end
 
-    it 'Can see the post body' do
-      expect(page).to have_content 'text'
-    end
+  it 'renders the name of the user' do
+    get user_posts_path(1)
+    expect(response.body).to include('John Doe')
+  end
 
-    it 'Can see the username of each commentor' do
-      expect(page).to have_content 'Jimmy'
-    end
+  it 'renders the number of likes of the post' do
+    get user_posts_path(1)
+    expect(response.body).to include('3')
+  end
 
-    it 'Can see the comment each commentor left' do
-      expect(page).to have_content 'text'
-    end
+  it 'renders the number of comments of the post' do
+    get user_posts_path(1)
+    expect(response.body).to include('2')
+  end
+
+  it 'renders the text of the post' do
+    get user_posts_path(1)
+    expect(response.body).to include('text1')
+  end
+
+  it 'renders the username of the each commenter' do
+    get user_posts_path(1)
+    expect(response.body).to include('John Doe')
+  end
+
+  it 'renders the comments of the each commenter' do
+    get user_posts_path(1)
+    expect(response.body).to include('comment1')
   end
 end
