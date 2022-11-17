@@ -25,5 +25,5 @@ RSpec.describe 'Users Index', type: :request do
   it 'renders the profile picture of the users' do
     get users_path
     expect(response.body).to include('img')
- end
+  end
 end
