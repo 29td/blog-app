@@ -1,29 +1,39 @@
 require 'rails_helper'
-require 'spec_helper'
 
-RSpec.describe 'Users Index', type: :request do
-  subject { page }
+RSpec.describe "UserIndices", type: :feature do
+  describe 'Get user index' do
+    before(:each) do
+      @first_user = User.create(name: 'Jimmy', photo: 'https://unsplash.com/photos/mgAioVzKcjQ',
+                                bio: 'I am Jimmy.')
+      @second_user = User.create(name: 'Patco', photo: 'https://unsplash.com/photos/mgAioVzKcjQ',
+                                 bio: 'I am Patco.')
+    end
 
-  before(:each) do
-    User.create(name: 'John Doe', posts_counter: 5, id: 352, photo: 'https://i.imgur.com/1J3wZQx.jpg')
-    User.create(name: 'Jane Doe', posts_counter: 2, id: 353, photo: 'https://i.imgur.com/1J3wZQx.jpg')
-    User.create(name: 'John Smith', posts_counter: 9, id: 354, photo: 'https://i.imgur.com/1J3wZQx.jpg')
-    User.create(name: 'Jane Smith', posts_counter: 4, id: 355, photo: 'https://i.imgur.com/1J3wZQx.jpg')
-  end
-  it 'assigns all users to @users' do
-    get users_path
-    expect(assigns(:users)).to eq(User.all)
-  end
-  it 'renders the name of the users' do
-    get users_path
-    expect(response.body).to include('John Doe', 'Jane Doe', 'John Smith', 'Jane Smith')
-  end
-  it 'shows number of posts of user' do
-    get users_path
-    expect(response.body).to include('Number of posts: 5')
-  end
-  it 'renders the profile picture of the users' do
-    get users_path
-    expect(response.body).to include('img')
+    scenario 'shows user content on screen' do
+      visit users_path
+      sleep(8)
+      expect(page).to have_content('List of All Users')
+    end
+
+    feature 'user index' do
+      background { visit users_path }
+      scenario 'See all users' do
+        expect(page).to have_content('Jimmy')
+        expect(page).to have_content('Patco')
+      end
+
+      scenario 'See number of posts by each user' do
+        expect(page).to have_content('Number of Posts:')
+      end
+
+      scenario 'See the profile picture for each user' do
+        expect(page.first('img')['src']).to have_content 'https://unsplash.com/photos/mgAioVzKcjQ'
+      end
+
+      scenario 'When I click on a user, I am redirected to that user show page' do
+        click_link 'Jimmy', match: :first
+        expect(current_path).to eq user_path(User.first.id)
+      end
+    end
   end
 end
