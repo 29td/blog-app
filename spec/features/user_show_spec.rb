@@ -6,8 +6,7 @@ RSpec.describe 'Users Show', type: :request do
 
   before(:each) do
     @user.create(name: 'John Doe', posts_counter: 5, id: 352,
-                photo: '/assets/icon.png
-                +,
+                photo: '/assets/images/icon.png',
                 bio: 'I am John Doe')
     Post.create(title: 'title1', text: 'text1', comments_counter: 0, likes_counter: 0, author_id: 352, id: 1)
     Post.create(title: 'title2', text: 'text2', comments_counter: 0, likes_counter: 0, author_id: 352, id: 2)
