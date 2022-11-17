@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe "UserShows", type: :feature do
+RSpec.describe 'UserShows', type: :feature do
   describe 'Get user show action' do
     before(:each) do
       @first_user = User.create(name: 'Jimmy', photo: 'https://unsplash.com/photos/mgAioVzKcjQ',

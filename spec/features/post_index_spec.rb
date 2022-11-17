@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature "PostIndices", type: :feature do
+RSpec.feature 'PostIndices', type: :feature do
   describe 'For the Post model' do
     before(:each) do
       @user = User.create(name: 'Jimmy', bio: 'I am Jimmy', posts_counter: 0)

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe "UserIndices", type: :feature do
+RSpec.describe 'UserIndices', type: :feature do
   describe 'Get user index' do
     before(:each) do
       @first_user = User.create(name: 'Jimmy', photo: 'https://unsplash.com/photos/mgAioVzKcjQ',
