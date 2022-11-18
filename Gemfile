@@ -53,6 +53,7 @@ group :development, :test do
   gem 'debug', platforms: %i[mri mingw x64_mingw]
   gem 'ffi'
   gem 'rails-controller-testing'
+  gem 'devise'
   gem 'rspec-rails'
 end
 
