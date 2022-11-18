@@ -1,24 +1,38 @@
-<section class="users-show">
-    <div>
-        <%= image_tag('icon.png', class: "userPix")  %>
-        <h1><%= @user.name %></h1>
-        <p>Number of posts:<%= @user.posts_counter || 0 %></p>
-        <p><%= @user.bio %></p>
-    </div>
+<div class='nav_bar'>
+  <h1><%= @user.name %></h1>
+  <a href="/users/sign_out" >Sign out</a>
+</div>
+<div class='users'>
+  <div class='img'>
+    <%= image_tag('icon.png')  %>
+  </div>
+  <div class='user_info'>
+    <h1>User ID: <%= @user.id %> </h1>
+    <h2 class='d-user'>Name: <%= @user.name %> </h2>
+    <h3 class='d-count'>Posts:<%= @user.posts_counter%> </h3>
+  </div>
+</div>
+<article class='bio'>
+  <h4>Bio</h4>
+  <p><%= @user.bio %> </p>
 
- 
-</section>
-   <div>
-    <% @user.posts.each do |e| %>
-        <div class="posts">
-            <h1>Post: <%= e.title %></h1>
-            <p><%= e.text %></p>
-            <div>
-            <span>Comments:<%= e.comments_counter || 0%></span>
-            <span>Likes:<%= e.likes_counter || 0%></span>
-            </div>
-          </div>
-    <% end %>
-    <%= link_to "Add New Post", "/users/#{@user.id}/posts/new", {:class => "see_all_post"}%>
-<button><%=link_to "See all posts", user_posts_path(@user) %></button>
+<%  if can? :create, Post %>
+  <%= link_to "Add New Post", "/users/#{@user.id}/posts/new", {:class => "see_all_post"}%> 
+<% end %>
+
+</article>
+<% @user.recent_posts.each_with_index do |post, index| %>
+    <div class='d-flex bio'>
+    <a id="<%=post.id%>" href='/users/<%= @user.id %>/posts'> <h3>Post # <%= index + 1 %> <%= post.title %></h3></a>
+    <h4><%= post.text %></h4>
+
+<%  if can? :destroy, Post %>
+  <%= button_to 'delete post', "/users/#{@user.id}/posts/#{post.id}", method: :delete%>
+<% end %>
+
+    <h5>Comments:<%= post.comments_counter %></h5>
+    <h5>Likes:<%= post.likes_counter %></h5>
     </div>
+<% end %> 
+
+<button id="all-posts" class='see'><%= link_to "See all Posts", user_posts_path(@user), {:class => "button_class"} %></button> 
