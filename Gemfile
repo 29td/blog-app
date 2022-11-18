@@ -59,7 +59,6 @@ group :development, :test do
 end
 
 gem 'bullet'
-gem 'cancancan'
 gem 'jwt'
 gem 'rack-cors'
 gem 'simple_command'

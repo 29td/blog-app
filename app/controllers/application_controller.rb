@@ -7,7 +7,7 @@ class ApplicationController < ActionController::Base
   def json_response(json, status)
     render json:, status:
   end
-  
+
   def update_allowed_parameters
     devise_parameter_sanitizer.permit(:sign_up) do |u|
       u.permit(:name, :surname, :email, :password, :password_confirmation)
@@ -28,12 +28,5 @@ class ApplicationController < ActionController::Base
   def authenticate_request
     @current_user = AuthorizeApiRequest.call(request.headers).result
     render json: { error: 'Not Authorized' }, status: 401 unless @current_user
-  end
-
-  rescue_from CanCan::AccessDenied do |exception|
-    redirect_to root_url, alert: exception.message
-  end
-  def after_sign_out_path_for(_resource_or_scope)
-    '/users/sign_in'
   end
 end
