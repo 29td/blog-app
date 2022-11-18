@@ -1,17 +1,18 @@
-<h1>Users#index</h1>
-
-<section>
+<div class='nav_bar'>
+  <h1>Blog App Users</h1>
+  <a href="/users/sign_out" >Sign out</a>
+</div>
 <% @users.each do |user| %>
-    <%= link_to user_path(user.id) do %>
-        <div class="user">
-          <div>
-          <%= image_tag('icon.png', class: "userPix")  %>
-          </div>
-          <div>
-            <h1><%= user.name %></h1>
-            <p>Number of posts: <%= user.posts_counter || 0 %></p>
-          </div>
-        </div>
-    <% end %>
+  <div class='users'>
+    <div class='img'>
+      <%= image_tag('icon.png')  %>
+    </div>
+    <div class='user_info'>
+      <h2>Name: <%= user.name %></h2>
+      <span>
+      <h4>Posts:<%= user.posts_counter %></h4>
+      <a id="<%=user.id%>" href='/users/<%= user.id %>'>More info</a>
+      </span>
+    </div>
+  </div>
 <% end %>
-</section>

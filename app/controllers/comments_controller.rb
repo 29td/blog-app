@@ -1,8 +1,5 @@
 class CommentsController < ApplicationController
-  def new
-    @comment = Comment.new
-  end
-
+  load_and_authorize_resource
   def create
     @post = Post.find(params[:post_id])
     new_comment = current_user.comments.new(post_id: @post.id,
@@ -16,6 +13,12 @@ class CommentsController < ApplicationController
         end
       end
     end
+  end
+
+  def destroy
+    comment = Comment.find(params[:id])
+    comment.post.decrement!(:comments_counter)
+    comment.delete
   end
 
   private

@@ -1,15 +1,160 @@
-/*
- * This is a manifest file that'll be compiled into application.css, which will include all the files
- * listed below.
- *
- * Any CSS (and SCSS, if configured) file within this directory, lib/assets/stylesheets, or any plugin's
- * vendor/assets/stylesheets directory can be referenced here using a relative path.
- *
- * You're free to add application-wide styles to this file and they'll appear at the bottom of the
- * compiled file so the styles you add here take precedence over styles defined in any other CSS
- * files in this directory. Styles in this file should be added after the last require_* statement.
- * It is generally better to create a new file per style scope.
- *
- *= require_tree .
- *= require_self
- */
+* {
+  margin: 0;
+  padding: 0;
+  font-family: 'Open Sans', sans-serif;
+}
+
+body {
+  background-image: linear-gradient(90deg, #81fbb8 10%, #28c76f 100%);
+  width: 100vw;
+  box-sizing: content-box;
+}
+
+.nav_bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 80px;
+  padding: 0 20px;
+  background-color: #0e0000c7;
+  margin: 0;
+}
+
+.nav_bar h1 {
+  color: #81fbb8;
+}
+
+.nav_bar a {
+  text-decoration: none;
+  background-color: #28c76f;
+  height: 20px;
+  width: auto;
+  padding: 2px 10px;
+}
+
+.users {
+  display: flex;
+  justify-content: space-between;
+  gap: 8%;
+  margin: 20px 20%;
+  background-color: #11301f2d;
+  box-shadow: rgba(99, 99, 99, 0.2) 0 2px 8px 0;
+}
+
+.user_info {
+  display: flex;
+  width: 90%;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.user_info h2 {
+  font-size: xx-large;
+  align-items: center;
+}
+
+.user_info a {
+  text-decoration: none;
+  background-color: #0e1a13;
+  height: 20px;
+  width: auto;
+  padding: 2px 10px;
+  color: #81fbb8;
+}
+
+.user_info span {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.user_info h3 {
+  background-color: #0e1a13;
+  height: 20px;
+  width: auto;
+  padding: 2px 10px;
+  color: #81fbb8;
+}
+
+img {
+  width: 230px;
+  height: 140px;
+  border-radius: 2%;
+}
+
+.bio {
+  border: 1px solid rgb(5, 5, 5);
+  padding-left: 2%;
+  margin: 20px 20%;
+  background-color: #11301f0a;
+}
+
+.see {
+  background-color: rgb(44, 220, 233);
+  color: rgb(2, 0, 0);
+  border: 1px solid rgb(5, 5, 5);
+  border-radius: 5px;
+  font-size: 12px;
+  width: fit-content;
+}
+
+.font {
+  font-size: 20px;
+  border: 3px solid rgb(5, 5, 5);
+}
+
+.padd {
+  font-size: larger;
+  display: flex;
+  margin-left: 50%;
+  gap: 20px;
+}
+
+.field {
+  display: flex;
+  text-align: center;
+  font-size: 20px;
+  flex-direction: column;
+  margin: 20px 20%;
+}
+
+.field > input {
+  font-size: 40px;
+}
+
+.sign {
+  font-size: 40px;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  margin-top: 10px;
+}
+
+#all-posts,
+#paginatation {
+  text-decoration: none;
+  background-color: #0e1a13;
+  height: 40px;
+  width: auto;
+  padding: 2px 10px;
+  color: #81fbb8;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  border: none;
+  border-radius: 4px;
+  box-shadow: rgba(99, 99, 99, 0.2) 0 2px 8px 0;
+  margin-top: 10px;
+}
+
+#all-posts a,
+#paginatation a {
+  color: #81fbb8;
+  font-size: larger;
+}
+
+.buttons {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 20px 20%;
+  gap: 10px;
+}
