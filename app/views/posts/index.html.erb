@@ -1,20 +1,40 @@
-<h1>Posts#index</h1>
-
-
-<div>
-<%= image_tag('icon.png', class: "userPix")  %>
-  <ul>
-    <% @posts.each do |post| %>
-      <li>
-        <h3 class="mb-2 text-sm font-bold"><%= post.title %> #<%= post.id %></h3>
-        <p><%= post.text %></p>
-        <p>Comments <%= post.comments_counter %>, Likes <%= post.likes_counter %></p>
-        <ul>
-          <% post.recent_comments.each do |comment| %>
-            <li><%= comment.author.name %> : <%= comment.text %></li>
-          <% end %>
-        </ul>
-      </li>
-    <% end %>
-  </ul>
+<div class='nav_bar'>
+  <h1><%= @user.name %>'s posts</h1>
+  <a href="/users/sign_out" >Sign out</a>
 </div>
+<div class='users'>
+  <div class='img'>
+    <%= image_tag('icon.png')  %>
+  </div>
+  <div class='user_info'>
+    <h1>User ID: <%= @user.id %> </h1>
+    <h2 class='d-user'>Name: <%= @user.name %> </h2>
+    <h3 class='d-count'>Posts:<%= @user.posts_counter%> </h3>
+  </div>
+</div>
+
+<% @posts.each do |post| %>
+  <div class='bio font'>
+    <a id="<%=post.id%>" href='/users/<%= @user.id %>/posts/<%= post.id %>'><%= post.id %>: <%= post.title%></a> 
+    <p><%=post.text%></p>
+    <%  if can? :destroy, Post %>
+  <%= button_to 'delete post', "/users/#{@user.id}/posts/#{post.id}", method: :delete%>
+<% end %>
+
+
+    <div class='padd'>
+      <h5 id="comment<%=post.id%>">Comments: <%= post.comments_counter %></h5>
+      <h5 id="like<%=post.id%>">Likes: <%= post.likes_counter %></h5>
+    </div>
+
+    <% post.comments.each do |comment| %>
+      <h5><%= comment.author.name %>: <%= comment.text %> </h5>
+  <% if can? :destroy, Comment %>
+      <%= button_to 'delete comment', "/posts/#{post.id}/comments/#{comment.id}", method: :delete %>
+  <% end %>
+    <% end %>
+  </div>
+<% end %>
+
+<hr/>
+<button id="paginatation"><%= link_to "Pagination", "/users/#{@user.id}/posts/", {:class => "Pagination"}%></button>

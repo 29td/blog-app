@@ -1,19 +1,22 @@
-<h1>Show post</h1>
+<h1>Post Details</h1>
+<p><%= @post.title %> by <%= @post.author.name %> Comments <%= @post.comments_counter %>,
+  Likes <%= @post.likes_counter %></p>
 
-<div>
-  <div>
-    <p><%= @post.title %> by <%= @post.author.name %></p>
-    <p>Comments: <%= @post.comments_counter %>, Likes: <%= @post.likes_counter %></p>
-  </div>
-  <p><%= @post.text %></p>
-  <ul>
-    <% @post.comments.each do |comment| %>
-      <li><%= comment.author.name %> : <%= comment.text %></li>
+<p><%= @post.text %></p>
+
+<ul>
+  <% @post.comments.includes(:author).each do |comment| %>
+    <p><%= comment.author.name %> : <%= comment.text %></p>
+    <% if can? :destroy, comment %>
+      <%= link_to "Delete Comment", user_post_comment_path(@post.author, @post, comment), data: { turbo_method: :delete, turbo_confirm: "Are you sure?" } %>
     <% end %>
-  </ul>
-    <%= form_with url: "/posts/#{@post.id}/likes", scope: :like do |form| %>
-      <%= form.submit "Like" %>
-    <% end %>
-    
-     <%= render partial: "create_comments", local: { post: @post } %> 
-</div>
+  <% end %>
+</ul>
+
+<%= form_with url: "/users/#{@post.author_id}/posts/#{@post.id}/likes" do |form| %>
+  <%= form.submit 'Like' %>
+<% end %>
+<% if can? :destroy, @post %>
+  <%= link_to "Delete post", user_post_path, data: { turbo_method: :delete, turbo_confirm: "Are you sure?" } %>
+<% end %>
+<%= link_to 'Add comment', new_user_post_comment_path(@user, @post) %>
